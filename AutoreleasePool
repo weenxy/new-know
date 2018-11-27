@@ -1,0 +1,5 @@
+AutoreleasePool，自动释放池机制。它的作用是什么，为什么需要它？
+AutoreleasePool是用栈形式的双向链表的结构来实现的。
+哨兵对象的存在，是为了解决AutoreleasePool嵌套的问题，每次objc_autoreleasePoolPop的时候，就pop到最近的哨兵对象的位置。
+每次的runloop循环，系统都会创建一个自动释放池，在runloop的结尾清空它，所以自动释放池内的对象应该是在一次runloop结束的时候被释放掉。、
+要搞清楚，什么样的对象会被编译器插入autorelease，使用alloc/new/copy/mutableCopy的对象都不是Autorelease的，非以上方法创建的都是Autorelease的。
