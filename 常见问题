@@ -1,0 +1,3 @@
+为什么不要再init和dealloc方法中使用self.来设置属性？
+frame和bounds的区别？
+为什么非要在主线程刷新UI？
