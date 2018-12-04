@@ -1,0 +1,5 @@
+事件发生后，会通过hit-test机制来确定事件的第一响应者，这就形成了一条响应者链。在从下往上去找，看哪个响应者可以响应事件，如果都不响应，则事件被丢弃。
+
+一个view不响应事件的三个条件：userEnable为false、alpha不透明度小于0.01、hidden为true。
+
+UIResponder与UIControl的关系，手势的识别？
