@@ -1,0 +1,11 @@
+OC语言中调用方法不叫函数调用，而是叫给对象发送消息，这个消息机制的过程是什么？
+
+((void()(id,SEL))(void)objc_msgSend)((id)obj,sel_registerName("foo"));
+首先，编译器将代码[obj run];转化为objc_msgSend(obj, @selector (run));
+在objc_msgSend函数中。首先通过obj的isa指针找到obj对应的class。
+在Class中先去cache中 通过SEL查找对应函数method，若cache中未找到。再去methodList中查找，若methodlist中未找到，则取superClass中查找。
+若能找到，则将method加入到cache中，以方便下次查找，并通过method中的函数指针跳转到对应的函数中去执行。
+如果还是没有找到，则进行消息转发机制，首先是通过resolveInstanceMethod:检查是否动态添加方法，如果没有，检查是否实现了快速转发forwardingTargetForSelector:，
+如果返回其他对象，则会发消息到那个对象，否则，进入标准消息转发，首先通过methodSignatureForSelector:获取方法签名，获取成功会调用forwardInvocation:转发消息，
+否则调用doesNotRecognizeSelector导致程序崩溃。
+
