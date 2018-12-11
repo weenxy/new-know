@@ -1,0 +1,10 @@
+弱引用的目的是为了解决循环引用的问题，是通过hash表来实现的。
+
+runtime维护了一个weak表，用于存储指向某个对象的所有weak指针。weak表其实是一个hash表，key是所指对象的地址，value是weak指针的地址数组。
+
+涉及到的几个函数
+objc_storeWeak
+
+一旦weak引用的原对象被释放，那么对应的__weak对象就会被置为nil。
+
+使用hash表的还有引用计数表
